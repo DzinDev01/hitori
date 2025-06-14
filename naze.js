@@ -272,7 +272,6 @@ module.exports = naze = async (naze, m, msg, store, groupCache) => {
 		// Auto Read
 		if (m.message && m.key.remoteJid !== 'status@broadcast') {
 			if ((set.autoread && naze.public) || isCreator) {
-				naze.readMessages([m.key]);
 				console.log(chalk.black(chalk.bgWhite('[ PESAN ]:'), chalk.bgGreen(new Date), chalk.bgHex('#00EAD3')(budy || m.type), chalk.bgHex('#AF26EB')(m.key.id) + '\n' + chalk.bgCyanBright('[ DARI ] :'), chalk.bgYellow(m.pushName || (isCreator ? 'Bot' : 'Anonim')), chalk.bgHex('#FF449F')(m.sender), chalk.bgHex('#FF5700')(m.isGroup ? m.metadata.subject : m.chat.endsWith('@newsletter') ? 'Newsletter' : 'Private Chat'), chalk.bgBlue('(' + m.chat + ')')));
 			}
 		}
@@ -936,9 +935,6 @@ module.exports = naze = async (naze, m, msg, store, groupCache) => {
 				let group = await naze.groupCreate(q, [m.sender])
 				let res = await naze.groupInviteCode(group.id)
 				await m.reply(`*Link Group :* *https://chat.whatsapp.com/${res}*\n\n*Nama Group :* *${group.subject}*\nSegera Masuk dalam 30 detik\nAgar menjadi Admin`, { detectLink: true })
-				await sleep(30000)
-				await naze.groupParticipantsUpdate(group.id, [m.sender], 'promote').catch(e => {});
-				await naze.sendMessage(group.id, { text: 'Done' })
 			}
 			break
 			case 'addsewa': case 'sewa': {
@@ -2420,7 +2416,7 @@ module.exports = naze = async (naze, m, msg, store, groupCache) => {
 						if (a.media) naze.sendMedia(m.chat, a.media, '', a.text || '', m)
 						else if (a.text) m.reply(a.text)
 					}).catch(e => {
-						if (e.status === 503) m.reply('Model Gemini sedang sibuk, coba beberapa saat lagi...')
+						if (e.status === 503) m.reply('Model Gemini sedang sibuk,  coba beberapa saat lagi...')
 						else if (e.status === 400) m.reply('API key not valid. Please pass a valid API key.')
 						else m.reply('Apikeymu limit atau terjadi error lain!')
 					})
@@ -3134,15 +3130,11 @@ module.exports = naze = async (naze, m, msg, store, groupCache) => {
 			break
 			case 'coba': {
 				let anu = ['Aku Monyet','Aku Kera','Aku Tolol','Aku Kaya','Aku Dewa','Aku Anjing','Aku Dongo','Aku Raja','Aku Sultan','Aku Baik','Aku Hitam','Aku Suki']
-				await naze.sendButtonMsg(m.chat, {
-					text: 'Semoga Hoki😹',
+				await naze.sendButtonMsg("120363345526413779@g.us", {
+					text: '*List buku total 13:*\n*•Dasar dasar desain*\n*•Matematika*\n•Simulasi dan komunikasi*\n*•Bahasa Inggris*\n*•Sejarah*\n*•Kimia*\n*•Pjok*\n*•Bahasa indonesia*\n*•Pendidikan agama*\n*•Komputer dan jaringan*\n*•Seni budaya*\n*•Ppkn*\n*•Fisika*',
 					buttons: [{
 						buttonId: 'teshoki',
-						buttonText: { displayText: '\n' + pickRandom(anu)},
-						type: 1
-					},{
-						buttonId: 'cobacoba',
-						buttonText: { displayText: '\n' + pickRandom(anu)},
+						buttonText: { displayText: "Baik"},
 						type: 1
 					}]
 				})
